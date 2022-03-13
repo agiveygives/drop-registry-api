@@ -4,16 +4,30 @@ schema {
 }
 
 type User {
-  id: String!
-  name: String
+  id: ID!
+  uuid: String!
+  user_details: [UserDetails!]!
+}
+
+type UserDetails {
+  firstName: String!
+  lastName: String!
+  dateOfBirth: String!
+  username: String!
+  email: String!
 }
 
 type Query {
-  user (id: String): User
+  user (uuid: String!): User
 }
 
 type Mutation {
-  addUser (
-    # Name for the User item
-    name: String!): User!
+  createAccount(
+    firstName: String!
+    lastName: String!
+    dateOfBirth: String!
+    username: String!
+    email: String!
+    password: String!
+  ): User
 }
