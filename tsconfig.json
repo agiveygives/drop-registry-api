@@ -8,6 +8,9 @@
     "esModuleInterop": true,
     "target": "es5"
   },
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]
 }

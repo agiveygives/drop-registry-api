@@ -11,27 +11,35 @@ type argumentType = {
 }
 
 const typeDefs = gql`
-  type createAccount {
-    firstName: String
-    lastName: String
-    dateOfBirth: Date
+  type User {
+    id: ID!
+    uuid: String!
+    user_details: [UserDetails!]!
+  }
+
+  type UserDetails {
+    first_name: String!
+    last_name: String!
+    date_of_birth: String!
+    username: String!
+    email: String!
   }
 
   type Mutation {
     createAccount(
       firstName: String!
       lastName: String!
-      dateOfBirth: Date!
+      dateOfBirth: String!
       username: String!
       email: String!
       password: String!
-    ): Post
+    ): User
   }
 `;
 
 const resolvers = {
   Mutation: {
-    player: (
+    createAccount: async (
       _parent: never,
       {
         firstName,
@@ -43,14 +51,14 @@ const resolvers = {
       }: argumentType,
       { services }: GraphqlContextType
     ) => {
-      return services.authService.createUser(
+      return await services.authService.createUser(
         firstName,
         lastName,
         dateOfBirth,
         username,
         email,
         password,
-      );
+      )
     },
   },
 };

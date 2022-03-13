@@ -1,5 +1,5 @@
 import { AuthenticationError } from 'apollo-server';
-import jwt, { Jwt } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { StatusCodes } from 'http-status-codes';
 import BaseService from 'services/baseService';
