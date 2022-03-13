@@ -1,0 +1,85 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Prisma Schema Docs:
+//   https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#model-field-scalar-types
+//   https://www.prisma.io/docs/concepts/database-connectors/postgresql#prisma-migrate
+model User {
+  id           Int           @id @default(autoincrement())
+  uuid         String        @unique @default(uuid())
+  user_details UserDetails[]
+  registries   Registry[]
+  purchases    GiftDetails[]
+}
+
+model UserDetails {
+  id            Int       @id @default(autoincrement())
+  user_id       Int
+  first_name    String
+  last_name     String
+  date_of_birth DateTime
+  username      String
+  email         String
+  password      String
+  created_at    DateTime  @default(now())
+  invalid_at    DateTime?
+  user          User      @relation(fields: [user_id], references: [id])
+}
+
+model InvalidTokens {
+  id         Int      @id @default(autoincrement())
+  jwt        String   @unique
+  expires_at DateTime
+}
+
+model Registry {
+  id               Int               @id @default(autoincrement())
+  uuid             String            @unique @default(uuid())
+  invite_code      String
+  created_by       Int
+  registry_details RegistryDetails[]
+  gifts            Gift[]
+  user             User              @relation(fields: [created_by], references: [id])
+}
+
+model RegistryDetails {
+  id          Int       @id @default(autoincrement())
+  registry_id Int
+  name        String
+  start_date  DateTime
+  end_date    DateTime
+  created_at  DateTime  @default(now())
+  invalid_at  DateTime?
+  registry    Registry  @relation(fields: [registry_id], references: [id])
+}
+
+model Gift {
+  id           Int           @id @default(autoincrement())
+  uuid         String        @unique @default(uuid())
+  registry_id  Int
+  gift_details GiftDetails[]
+  registry     Registry      @relation(fields: [registry_id], references: [id])
+}
+
+model GiftDetails {
+  id            Int       @id @default(autoincrement())
+  gift_id       Int
+  name          String
+  description   String?
+  cost_estimate Float?
+  url           String
+  purchased_by  Int?
+  created_at    DateTime  @default(now())
+  invalid_at    DateTime?
+  gift          Gift      @relation(fields: [gift_id], references: [id])
+  user          User?     @relation(fields: [purchased_by], references: [id])
+}
