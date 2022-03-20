@@ -3,10 +3,13 @@ schema {
   mutation: Mutation
 }
 
+scalar DateTime
+
 type User {
   id: ID!
   uuid: String!
-  user_details: [UserDetails!]!
+  userDetails: UserDetails!
+  detailsHistory: [UserDetails]!
 }
 
 type UserDetails {
@@ -15,13 +18,62 @@ type UserDetails {
   date_of_birth: String!
   username: String!
   email: String!
+  createdAt: DateTime!
+  invalidAt: DateTime
+}
+
+type Registry {
+  id: ID!
+  uuid: String!
+  registryDetails: RegistryDetails!
+  detailsHistory: [RegistryDetails]!
+}
+
+type RegistryDetails {
+  name: String!
+  startDate: DateTime!
+  endDate: DateTime
+  gifts: [Gift]!
+  createdAt: DateTime!
+  invalidAt: DateTime
+}
+
+type Gift {
+  id: ID!
+  uuid: String!
+  giftDetails: GiftDetails!
+  detailsHistory: [GiftDetails]!
+  registries: [Registry]!
+}
+
+type GiftDetails {
+  name: String!
+  description: String
+  costEstimage: String
+  url: String!
+  purchasedBy: User
+  createdAt: DateTime!
+  invalidAt: DateTime
+}
+
+type Authenticated {
+  expiration: DateTime
+  authenticated: Boolean!
 }
 
 type Query {
+  # done
   user (uuid: String!): User
+
+  # not done
+  gift (uuid: String!): Gift
+  gifts (): [Gift]
+  registry (uuid: String!): Registry
+  registries (): [Registry]
 }
 
 type Mutation {
+  # done
   createAccount(
     firstName: String!
     lastName: String!
@@ -30,4 +82,54 @@ type Mutation {
     email: String!
     password: String!
   ): User
+
+  # not done
+  login(
+    username: String!
+    password: String!
+  ): Authenticated
+
+  logout(): Boolean
+
+  createRegistry(
+    name: String!
+    startDate: DateTime!
+    endDate: DateTime
+  ): Registry
+
+  updateRegistry(
+    registryUuid: String!
+    name: String!
+    startDate: DateTime!
+    endDate: DateTime
+  ): Registry
+
+  createGift(
+    name: String!
+    description: String
+    costEstimage: String
+    url: String!
+  ): Gift
+
+  updateGift(
+    giftUuid: String!
+    name: String
+    description: String
+    costEstimage: String
+    url: String
+  ): Gift
+
+  addGiftsToRegistry(
+    giftUuids: [String!]
+    registryUuid: String!
+  ): Gift
+
+  removeGiftsFromRegistry(
+    giftUuids: [String!]
+    registryUuid: String!
+  ): Gift
+
+  buyGift(
+    giftUuid: String!
+  ): Boolean
 }
