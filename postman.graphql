@@ -9,7 +9,7 @@ type User {
   id: ID!
   uuid: String!
   user_details: UserDetails!
-  detailsHistory: [UserDetails]!
+  details_history: [UserDetails]!
 }
 
 type UserDetails {
@@ -18,42 +18,42 @@ type UserDetails {
   date_of_birth: String!
   username: String!
   email: String!
-  createdAt: DateTime!
-  invalidAt: DateTime
+  created_at: DateTime!
+  invalid_at: DateTime
 }
 
 type Registry {
   id: ID!
   uuid: String!
-  registryDetails: RegistryDetails!
-  detailsHistory: [RegistryDetails]!
+  registry_details: RegistryDetails!
+  details_history: [RegistryDetails]!
 }
 
 type RegistryDetails {
   name: String!
-  startDate: DateTime!
-  endDate: DateTime
+  start_date: DateTime!
+  end_date: DateTime
   gifts: [Gift]!
-  createdAt: DateTime!
-  invalidAt: DateTime
+  created_at: DateTime!
+  invalid_at: DateTime
 }
 
 type Gift {
   id: ID!
   uuid: String!
-  giftDetails: GiftDetails!
-  detailsHistory: [GiftDetails]!
+  gift_details: GiftDetails!
+  details_history: [GiftDetails]!
   registries: [Registry]!
 }
 
 type GiftDetails {
   name: String!
   description: String
-  costEstimage: String
+  cost_estimate: String
   url: String!
-  purchasedBy: User
-  createdAt: DateTime!
-  invalidAt: DateTime
+  purchased_by: User
+  created_at: DateTime!
+  invalid_at: DateTime
 }
 
 type Authenticated {
