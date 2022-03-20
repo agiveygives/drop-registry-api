@@ -10,34 +10,7 @@ type argumentType = {
   password: string,
 }
 
-const typeDefs = gql`
-  type User {
-    id: ID!
-    uuid: String!
-    user_details: [UserDetails!]!
-  }
-
-  type UserDetails {
-    first_name: String!
-    last_name: String!
-    date_of_birth: String!
-    username: String!
-    email: String!
-  }
-
-  type Mutation {
-    createAccount(
-      firstName: String!
-      lastName: String!
-      dateOfBirth: String!
-      username: String!
-      email: String!
-      password: String!
-    ): User
-  }
-`;
-
-const resolvers = {
+const resolver = {
   Mutation: {
     createAccount: async (
       _parent: never,
@@ -63,4 +36,4 @@ const resolvers = {
   },
 };
 
-export { typeDefs, resolvers };
+export default resolver;

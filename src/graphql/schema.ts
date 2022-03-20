@@ -1,7 +1,9 @@
 import { gql } from 'apollo-server-core';
 import { makeExecutableSchema } from '@graphql-tools/schema';
+import { DateTimeTypeDefinition, DateTimeResolver } from 'graphql-scalars';
 
-import { authTypeDefs, authResolvers } from 'graphql/mutations/auth';
+import types from 'graphql/types';
+import resolvers from 'graphql/resolvers'
 
 // Define base Query/Mutation types to be extended
 const typeDefs = gql`
@@ -13,13 +15,19 @@ const typeDefs = gql`
   }
 `;
 
+const scalarResolvers = {
+  DateTime: DateTimeResolver,
+};
+
 const schema = makeExecutableSchema({
   typeDefs: [
     typeDefs,
-    ...authTypeDefs,
+    DateTimeTypeDefinition,
+    ...types,
   ],
   resolvers: [
-    ...authResolvers,
+    scalarResolvers,
+    ...resolvers,
   ]
 });
 

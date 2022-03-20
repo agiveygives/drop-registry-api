@@ -1,6 +1,7 @@
 import { PrismaClient, User } from "@prisma/client";
 import { Response, Request } from 'express';
 import { AuthService } from 'services/auth';
+import { UserService } from "services/user";
 
 // import { PlayerService } from "../player/player.service";
 // import { TeamService } from "../team/team.service";
@@ -12,7 +13,7 @@ class Services {
   private user?: User | null;
 
   private _authService: AuthService | undefined;
-  // private _playerService: PlayerService | undefined;
+  private _userService: UserService | undefined;
   // private _teamService: TeamService | undefined;
 
   constructor(
@@ -36,6 +37,17 @@ class Services {
       );
     }
     return this._authService;
+  }
+
+  get userService() {
+    if (!this._userService) {
+      this._userService = new UserService(
+        this.res,
+        this.req,
+        this.prismaClient
+      );
+    }
+    return this._userService;
   }
 
   // get playerService() {

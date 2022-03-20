@@ -8,7 +8,7 @@ scalar DateTime
 type User {
   id: ID!
   uuid: String!
-  userDetails: UserDetails!
+  user_details: UserDetails!
   detailsHistory: [UserDetails]!
 }
 
@@ -66,10 +66,14 @@ type Query {
   user (uuid: String!): User
 
   # not done
+  userAll (): [User]
+  userCurrent (): User
+
   gift (uuid: String!): Gift
-  gifts (): [Gift]
+  giftAll (): [Gift]
+
   registry (uuid: String!): Registry
-  registries (): [Registry]
+  registryAll (): [Registry]
 }
 
 type Mutation {
