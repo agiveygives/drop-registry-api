@@ -63,7 +63,7 @@ type Authenticated {
 
 type Query {
   # done
-  user (uuid: String!): User
+  userByUuid (uuid: String!): User
 
   # not done
   userAll: [User]
