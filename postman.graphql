@@ -66,18 +66,17 @@ type Query {
   user (uuid: String!): User
 
   # not done
-  userAll (): [User]
-  userCurrent (): User
+  userAll: [User]
+  userCurrent: User
 
   gift (uuid: String!): Gift
-  giftAll (): [Gift]
+  giftAll: [Gift]
 
   registry (uuid: String!): Registry
-  registryAll (): [Registry]
+  registryAll: [Registry]
 }
 
 type Mutation {
-  # done
   createAccount(
     firstName: String!
     lastName: String!
@@ -93,7 +92,7 @@ type Mutation {
     password: String!
   ): Authenticated
 
-  logout(): Boolean
+  logout: Boolean
 
   createRegistry(
     name: String!
